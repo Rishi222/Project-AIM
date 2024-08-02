@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import './Login.css';
 import Logo from './Logo';'./Logo.jsx';
 // import axios from 'axios';
-
+                                                            // JS login
 function Login(){
-
-                                                          // ( JS ) logic Part here.
-
     const [username,setUsername]=useState('');
     const [password,setPassword]=useState('');
     const [loading, setLoading] = useState(false);
@@ -16,30 +13,22 @@ function Login(){
     // new code 
     useEffect(()=>{
       if(localStorage.getItem("user-info")){
-        window.location.href("/add");
+        window.location.href="/add"; // removed the parentheses
       }
     },[])
 
     async function login(){
       setLoading(true);
       setResponse(null);
-      setError(null);                                  
-
-      // console.log(username, password);
-      // console.log(`?x=${encodeURI("test@abc.com")}`);
-      // let username = `rajababusharma7124@gmail.com`;
-      // let password = `123456`;
-
+      setError(null);  
       console.warn(username,password)
-       const corsProxy = "https://cors-anywhere.herokuapp.com/";
-       const url = `${corsProxy}https://anichedigital.in/api/home/Login?username=${encodeURIComponent(
-         username
-       )}&password=${encodeURIComponent(password)}`;
+       const url = `https://anichedigital.in/api/home/Login?username=${username}%20&password=${password}`;
       try {
         let result = await fetch(url, {
           method: "GET",
           headers: {
             Accept: "application/json",
+            'Access-Control-Allow-Origin': '*' // add this header
           },
         });
         if (!result.ok) {
@@ -48,12 +37,65 @@ function Login(){
         //second parse of data.
         result = await result.json();
         localStorage.setItem("user-info", JSON.stringify(result));
-        window.location.href("/add");
+        window.location.href="/add"; // removed the parentheses
       } catch (error) {
         setError(error.message);
         console.error("Error:", error);
       } 
     }
+
+
+// function Login(){
+
+//                                                           // ( JS ) logic Part here.
+
+//     const [username,setUsername]=useState('');
+//     const [password,setPassword]=useState('');
+//     const [loading, setLoading] = useState(false);
+//     const [response, setResponse] = useState(null);
+//     const [error, setError] = useState(null);
+
+//     // new code 
+//     useEffect(()=>{
+//       if(localStorage.getItem("user-info")){
+//         window.location.href("/add");
+//       }
+//     },[])
+
+//     async function login(){
+//       setLoading(true);
+//       setResponse(null);
+//       setError(null);                                  
+
+//       // console.log(username, password);
+//       // console.log(`?x=${encodeURI("test@abc.com")}`);
+//       // let username = `rajababusharma7124@gmail.com`;
+//       // let password = `123456`;
+
+//       console.warn(username,password)
+//        const corsProxy = "https://cors-anywhere.herokuapp.com/";
+//        const url = `${corsProxy}https://anichedigital.in/api/home/Login?username=${encodeURIComponent(
+//          username
+//        )}&password=${encodeURIComponent(password)}`;
+//       try {
+//         let result = await fetch(url, {
+//           method: "GET",
+//           headers: {
+//             Accept: "application/json",
+//           },
+//         });
+//         if (!result.ok) {
+//           throw new Error(`HTTP error! status: ${result.status}`);
+//         }
+//         //second parse of data.
+//         result = await result.json();
+//         localStorage.setItem("user-info", JSON.stringify(result));
+//         window.location.href("/add");
+//       } catch (error) {
+//         setError(error.message);
+//         console.error("Error:", error);
+//       } 
+//     }
 
 
                                                         // Second logic code for login 
