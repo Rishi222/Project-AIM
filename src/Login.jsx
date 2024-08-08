@@ -24,20 +24,20 @@ function Login(){
       console.warn(username,password)
        const url = `https://anichedigital.in/api/home/Login?username=${username}%20&password=${password}`;
       try {
-        let result = await fetch(url, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            'Access-Control-Allow-Origin': '*' // add this header
-          },
-        });
-        if (!result.ok) {
-          throw new Error(`HTTP error! status: ${result.status}`);
-        }
-        //second parse of data.
-        result = await result.json();
-        localStorage.setItem("user-info", JSON.stringify(result));
-        window.location.href="/add"; // removed the parentheses
+           let res = await fetch(url);
+           if (!res.ok) {
+             throw new Error(`HTTP error! Status: ${res.status}`);
+           }
+           //    res.json();
+           let data = await res.json();
+           if (data.ok) {
+             console.log("login Successful");
+           }
+        // localStorage.setItem("user-info", JSON.stringify(data));
+        // window.location.href="/add"; // removed the parentheses
+        // if(result.ok){
+        //   console.log("Login Successful");
+        // }
       } catch (error) {
         setError(error.message);
         console.error("Error:", error);
